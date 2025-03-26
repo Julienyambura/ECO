@@ -1,6 +1,7 @@
-import { Key } from "react";
+import { Key, ReactNode } from "react";
 
 export type RecyclingLocation = {
+  zipCode: ReactNode;
   _id: Key | null | undefined;
   id: string;
   name: string;
@@ -9,7 +10,7 @@ export type RecyclingLocation = {
   state: string;
   zip: string;
   phone: string;
-  website?: string;
+  // website?: string;
   hours: string;
   acceptedItems: string[];
   position: [number, number];

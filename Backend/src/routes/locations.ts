@@ -1,15 +1,20 @@
+// src/routes/locations.ts
 import express from "express";
+import type { Request, Response } from "express";
 import {
-  getLocationById,
   getLocations,
-} from "../controllers/locationsController"; // named imports
+  getLocationById,
+} from "../controllers/locationsController";
 
 const router = express.Router();
 
-// GET all locations
-router.get("/", getLocations);
+// Use inline function definitions
+router.get("/", async (req: Request, res: Response) => {
+  await getLocations(req, res);
+});
 
-// GET location by ID
-router.get("/:id");
+router.get("/:id", async (req: Request, res: Response) => {
+  await getLocationById(req, res);
+});
 
 export default router;

@@ -4,8 +4,9 @@
   "main": "server.js",
   "scripts": {
     "build": "tsc",
-    "start": "server.js",
-    "dev": "server.ts",
+    "start": "node server.js",
+    "dev": "ts-node src/server.ts",
+    "db:seed": "ts-node src/scripts/seed.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,7 +17,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.12.2"
+    "mongoose": "^8.12.2",
+    "typescript": "^5.8.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

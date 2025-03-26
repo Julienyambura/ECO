@@ -364,7 +364,7 @@ export default function AdminPage() {
                         <Label htmlFor={`website-${location.id}`}>
                           Website (optional)
                         </Label>
-                        <Input
+                        {/* <Input
                           id={`website-${location.id}`}
                           value={editingLocation.website || ""}
                           onChange={(e) =>
@@ -373,7 +373,7 @@ export default function AdminPage() {
                               website: e.target.value,
                             })
                           }
-                        />
+                        /> */}
                       </div>
 
                       <div className="flex gap-2 mt-4">
@@ -412,7 +412,7 @@ export default function AdminPage() {
                         </div>
                       </div>
 
-                      {location.website && (
+                      {/* {location.website && (
                         <div>
                           <p className="text-sm font-medium">Website:</p>
                           <a
@@ -424,7 +424,7 @@ export default function AdminPage() {
                             {location.website}
                           </a>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   )}
                 </CardContent>

@@ -36,7 +36,7 @@ export const authService = {
     try {
       const response = await api.get<{ user: User }>("/auth/user");
       return response.data.user;
-    } catch (error) {
+    } catch {
       return null;
     }
   },

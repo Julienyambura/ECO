@@ -25,8 +25,7 @@ async function setupDatabase() {
       city: String,
       state: String,
       zipCode: String,
-      latitude: Number,
-      longitude: Number,
+      
       hours: String,
       phone: String,
       website: String,

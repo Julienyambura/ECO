@@ -7,6 +7,6 @@ export interface RecyclingLocation {
   zipCode: string;
   hours?: string;
   phone?: string;
-  website?: string;
+ 
   acceptedItems?: string[];
 }

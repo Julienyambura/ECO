@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from "react";
-import * as ToastPrimitives from "@radix-ui/react-toast";
 
 type ToastAction = {
   label: string;
@@ -34,8 +34,6 @@ type UseToastReturn = {
     remove: ToastRemove;
   };
 };
-
-const VIEWPORT_GAP = 8;
 
 function useToast(): UseToastReturn {
   const [toasts, setToasts] = React.useState<Toast[]>([]);

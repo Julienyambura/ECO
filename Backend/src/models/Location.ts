@@ -1,8 +1,9 @@
 import mongoose, { Schema, type Document } from "mongoose"
-import type { RecyclingLocation } from "../types/location"
 
 // Interface for the Location document
-export interface LocationDocument extends RecyclingLocation, Document {}
+export interface LocationDocument extends Document {
+    id?: string;
+}
 
 // Schema for the Location model
 const LocationSchema: Schema = new Schema(
@@ -15,7 +16,7 @@ const LocationSchema: Schema = new Schema(
     zipCode: { type: String, required: true },
     hours: { type: String },
     phone: { type: String },
-    website: { type: String },
+   
     acceptedItems: { type: [String] },
   },
   {

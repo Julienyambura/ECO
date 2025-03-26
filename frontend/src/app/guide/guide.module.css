@@ -1,0 +1,132 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #1a1a1a;
+}
+
+.content {
+  display: grid;
+  gap: 32px;
+}
+
+.section {
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  padding: 24px;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .cardGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.acceptableCard {
+  border-color: #c8e6c9;
+}
+
+.nonRecyclableCard {
+  border-color: #ffcdd2;
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.checkIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  color: #2e7d32;
+}
+
+.xIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  color: #d32f2f;
+}
+
+.paragraph {
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.list,
+.checkList,
+.xList,
+.numberedList {
+  padding-left: 24px;
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+.list li,
+.checkList li,
+.xList li {
+  margin-bottom: 8px;
+}
+
+.checkList li {
+  list-style-type: none;
+  position: relative;
+}
+
+.checkList li:before {
+  content: "✓";
+  position: absolute;
+  left: -20px;
+  color: #2e7d32;
+}
+
+.xList li {
+  list-style-type: none;
+  position: relative;
+}
+
+.xList li:before {
+  content: "✕";
+  position: absolute;
+  left: -20px;
+  color: #d32f2f;
+}
+
+.numberedList {
+  list-style-type: decimal;
+}
+
+.numberedList li {
+  margin-bottom: 16px;
+}
