@@ -43,18 +43,16 @@ export default function AdminPage() {
     useState<RecyclingLocation | null>(null);
 
   useEffect(() => {
-    // Redirect if not admin
-    if (!authLoading && (!user || user.role !== "admin")) {
-      toast.add({
-        title: "Unauthorized",
-        description: "You don't have permission to access this page.",
-        // variant: "destructive",
-      });
-      router.push("/");
-      return;
-    }
+    if (!authLoading) {
+      if (!user || user.role !== "admin") {
+        toast.add({
+          title: "Unauthorized",
+          description: "You don't have permission to access this page.",
+        });
+        router.push("/");
+        return;
+      }
 
-    if (!authLoading && user?.role === "admin") {
       const fetchData = async () => {
         try {
           setIsLoading(true);
@@ -64,13 +62,8 @@ export default function AdminPage() {
           setLocations(locationsData);
 
           // Fetch contact submissions
-          try {
-            const submissionsData = await contactService.getSubmissions();
-            setContactSubmissions(submissionsData);
-          } catch (err) {
-            console.error("Error fetching submissions:", err);
-            // Don't fail the whole page if just submissions fail
-          }
+          const submissionsData = await contactService.getSubmissions();
+          setContactSubmissions(submissionsData);
         } catch (err) {
           console.error("Error fetching data:", err);
           setError("Failed to load data. Please try again later.");
@@ -103,7 +96,6 @@ export default function AdminPage() {
       toast.add({
         title: "Error",
         description: "Failed to delete the location. Please try again.",
-        // variant: "destructive",
       });
     }
   };
@@ -139,7 +131,6 @@ export default function AdminPage() {
       toast.add({
         title: "Error",
         description: "Failed to update the location. Please try again.",
-        // variant: "destructive",
       });
     }
   };
@@ -169,7 +160,6 @@ export default function AdminPage() {
         title: "Error",
         description:
           "Failed to mark the submission as handled. Please try again.",
-        // variant: "destructive",
       });
     }
   };
@@ -345,148 +335,65 @@ export default function AdminPage() {
                           />
                         </div>
                       </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor={`hours-${location.id}`}>Hours</Label>
-                        <Input
-                          id={`hours-${location.id}`}
-                          value={editingLocation.hours}
-                          onChange={(e) =>
-                            setEditingLocation({
-                              ...editingLocation,
-                              hours: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor={`website-${location.id}`}>
-                          Website (optional)
-                        </Label>
-                        {/* <Input
-                          id={`website-${location.id}`}
-                          value={editingLocation.website || ""}
-                          onChange={(e) =>
-                            setEditingLocation({
-                              ...editingLocation,
-                              website: e.target.value,
-                            })
-                          }
-                        /> */}
-                      </div>
-
-                      <div className="flex gap-2 mt-4">
-                        <Button onClick={handleSaveLocation}>
-                          <Save className="h-4 w-4 mr-1" /> Save Changes
-                        </Button>
-                        <Button variant="outline" onClick={handleCancelEdit}>
-                          <X className="h-4 w-4 mr-1" /> Cancel
-                        </Button>
-                      </div>
                     </div>
                   ) : (
-                    <div className="space-y-2">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-sm font-medium">Phone:</p>
-                          <p className="text-sm">{location.phone}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium">Hours:</p>
-                          <p className="text-sm">{location.hours}</p>
-                        </div>
-                      </div>
-
-                      <div>
-                        <p className="text-sm font-medium">Accepted Items:</p>
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {location.acceptedItems.map((item, index) => (
-                            <span
-                              key={index}
-                              className="text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full"
-                            >
-                              {item}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* {location.website && (
-                        <div>
-                          <p className="text-sm font-medium">Website:</p>
-                          <a
-                            href={location.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-                          >
-                            {location.website}
-                          </a>
-                        </div>
-                      )} */}
+                    <div>
+                      <p>{location.address}</p>
+                      <p>{location.city}</p>
+                      <p>{location.state}</p>
                     </div>
                   )}
                 </CardContent>
+                <CardFooter>
+                  {editingLocation && editingLocation.id === location.id ? (
+                    <div className="flex gap-4">
+                      <Button
+                        onClick={handleSaveLocation}
+                        className="flex items-center"
+                      >
+                        <Save className="h-4 w-4 mr-2" /> Save
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={handleCancelEdit}
+                        className="flex items-center"
+                      >
+                        <X className="h-4 w-4 mr-2" /> Cancel
+                      </Button>
+                    </div>
+                  ) : null}
+                </CardFooter>
               </Card>
             ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="contact" className="mt-6">
+        <TabsContent value="contact">
           <h2 className="text-xl font-semibold mb-6">
             Contact Form Submissions
           </h2>
-
-          {contactSubmissions.length === 0 ? (
-            <Card>
-              <CardContent className="py-8">
-                <div className="text-center">
-                  <p className="text-muted-foreground">
-                    No contact form submissions yet.
-                  </p>
+          {contactSubmissions.map((submission) => (
+            <Card key={submission.id} className="mb-4">
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>{submission.name}</CardTitle>
+                    <CardDescription>{submission.email}</CardDescription>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleMarkAsHandled(submission.id)}
+                  >
+                    <CheckCircle className="h-4 w-4 mr-1" /> Mark as Handled
+                  </Button>
                 </div>
+              </CardHeader>
+              <CardContent>
+                <p>{submission.message}</p>
               </CardContent>
             </Card>
-          ) : (
-            <div className="grid gap-6">
-              {contactSubmissions.map((submission) => (
-                <Card key={submission.id}>
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle>{submission.subject}</CardTitle>
-                        <CardDescription>
-                          From: {submission.name} ({submission.email})
-                        </CardDescription>
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {new Date(submission.createdAt).toLocaleString()}
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="whitespace-pre-wrap">{submission.message}</p>
-                  </CardContent>
-                  <CardFooter className="flex justify-end">
-                    {submission.isHandled ? (
-                      <span className="text-sm text-green-600 dark:text-green-400 flex items-center">
-                        <CheckCircle className="h-4 w-4 mr-1" /> Handled
-                      </span>
-                    ) : (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleMarkAsHandled(submission.id)}
-                      >
-                        Mark as Handled
-                      </Button>
-                    )}
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          )}
+          ))}
         </TabsContent>
       </Tabs>
     </div>

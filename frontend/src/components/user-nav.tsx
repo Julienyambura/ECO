@@ -26,7 +26,7 @@ export function UserNav() {
         title: "Logged out",
         description: "You have been successfully logged out.",
       });
-    } catch (error) {
+    } catch {
       toast.add({
         title: "Logout failed",
         description: "Failed to log out. Please try again.",
